@@ -1,0 +1,1738 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>7akimi Hotel — Property Management System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-obsidian: #f4f5f8;
+      --bg-surface: #ffffff;
+      --bg-elevated: #fafafc;
+      --bg-glass: rgba(255, 255, 255, 0.88);
+      --border-subtle: #e2e6ee;
+      --border-gold: rgba(113, 75, 103, 0.35);
+      --gold-primary: #714b67;
+      --gold-light: #8d6382;
+      --gold-glow: rgba(113, 75, 103, 0.14);
+      --accent-coral: #017e84;
+      --text-primary: #1f2937;
+      --text-secondary: #4b5563;
+      --text-muted: #6b7280;
+      --emerald: #059669;
+      --emerald-bg: rgba(16, 185, 129, 0.14);
+      --amber: #d97706;
+      --amber-bg: rgba(245, 158, 11, 0.16);
+      --rose: #e11d48;
+      --rose-bg: rgba(244, 63, 94, 0.14);
+      --sky: #0284c7;
+      --sky-bg: rgba(14, 165, 233, 0.14);
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --radius-sm: 8px;
+      --shadow-luxury: 0 18px 45px rgba(31, 41, 55, 0.08);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background:
+        radial-gradient(circle at 10% 8%, rgba(113, 75, 103, 0.08), transparent 36%),
+        radial-gradient(circle at 90% 88%, rgba(1, 126, 132, 0.07), transparent 40%),
+        var(--bg-obsidian);
+      color: var(--text-primary);
+      min-height: 100vh;
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    .font-serif-display {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      letter-spacing: 0.3px;
+    }
+
+    /* Login Screen */
+    #login-screen {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      align-items: stretch;
+    }
+
+    .login-hero {
+      position: relative;
+      padding: 56px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background:
+        linear-gradient(150deg, rgba(44, 24, 40, 0.82), rgba(113, 75, 103, 0.68)),
+        url('https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+      border-right: 1px solid var(--border-subtle);
+      color: #ffffff;
+    }
+
+    .brand-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      backdrop-filter: blur(12px);
+      width: fit-content;
+    }
+
+    .brand-crest {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: #ffffff;
+      color: var(--gold-primary);
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      font-size: 15px;
+    }
+
+    .hero-copy h1 {
+      font-size: clamp(2.5rem, 4vw, 3.6rem);
+      line-height: 1.1;
+      margin-bottom: 14px;
+      color: #ffffff;
+    }
+
+    .hero-copy p {
+      color: #f3e8f0;
+      max-width: 480px;
+      font-size: 1.04rem;
+    }
+
+    .hero-metrics {
+      display: flex;
+      gap: 32px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255, 255, 255, 0.24);
+    }
+
+    .hero-metric strong {
+      display: block;
+      font-size: 1.35rem;
+      color: #ffffff;
+    }
+
+    .hero-metric span {
+      font-size: 0.82rem;
+      color: #e9d8e5;
+    }
+
+    .login-panel {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+      background: var(--bg-obsidian);
+    }
+
+    .login-card {
+      width: 100%;
+      max-width: 420px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 36px;
+      box-shadow: var(--shadow-luxury);
+    }
+
+    .login-card h2 {
+      font-size: 2rem;
+      margin-bottom: 6px;
+      color: var(--text-primary);
+    }
+
+    .login-card .subtitle {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      margin-bottom: 26px;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 7px;
+      letter-spacing: 0.3px;
+    }
+
+    .input-control, .select-control {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-subtle);
+      background: var(--bg-elevated);
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: 0.94rem;
+      transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+    }
+
+    .input-control:focus, .select-control:focus {
+      outline: none;
+      background: #ffffff;
+      border-color: var(--gold-primary);
+      box-shadow: 0 0 0 3px var(--gold-glow);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 11px 18px;
+      border-radius: var(--radius-sm);
+      border: 1px solid transparent;
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-gold {
+      background: linear-gradient(135deg, var(--gold-light), var(--gold-primary));
+      color: #ffffff;
+      box-shadow: 0 8px 20px rgba(113, 75, 103, 0.25);
+    }
+
+    .btn-gold:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 26px rgba(113, 75, 103, 0.35);
+    }
+
+    .btn-ghost {
+      background: #ffffff;
+      color: var(--text-primary);
+      border-color: var(--border-subtle);
+    }
+
+    .btn-ghost:hover {
+      background: #f3f4f6;
+      border-color: #cbd5e1;
+    }
+
+    .btn-emerald {
+      background: var(--emerald-bg);
+      color: var(--emerald);
+      border-color: rgba(16, 185, 129, 0.32);
+    }
+
+    .btn-emerald:hover { background: rgba(16, 185, 129, 0.22); }
+
+    .btn-amber {
+      background: var(--amber-bg);
+      color: var(--amber);
+      border-color: rgba(245, 158, 11, 0.35);
+    }
+
+    .btn-amber:hover { background: rgba(245, 158, 11, 0.24); }
+
+    .btn-rose {
+      background: var(--rose-bg);
+      color: var(--rose);
+      border-color: rgba(244, 63, 94, 0.3);
+    }
+
+    .btn-rose:hover { background: rgba(244, 63, 94, 0.22); }
+
+    .btn-sm { padding: 7px 12px; font-size: 0.8rem; }
+    .w-full { width: 100%; }
+
+    /* Main App Layout */
+    #app-shell {
+      display: none;
+      min-height: 100vh;
+    }
+
+    .app-grid {
+      display: grid;
+      grid-template-columns: 265px 1fr;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      background: var(--bg-surface);
+      border-right: 1px solid var(--border-subtle);
+      padding: 24px 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+    }
+
+    .sidebar-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 6px 10px 22px;
+      border-bottom: 1px solid var(--border-subtle);
+      margin-bottom: 18px;
+    }
+
+    .sidebar .brand-crest {
+      background: linear-gradient(135deg, var(--gold-light), var(--gold-primary));
+      color: #ffffff;
+    }
+
+    .sidebar-brand h3 {
+      font-size: 1.45rem;
+      line-height: 1.1;
+      color: var(--gold-primary);
+    }
+
+    .sidebar-brand span {
+      font-size: 0.73rem;
+      color: var(--text-muted);
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+    }
+
+    .nav-list {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .nav-btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      padding: 11px 14px;
+      border-radius: var(--radius-sm);
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--text-secondary);
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.18s ease;
+    }
+
+    .nav-btn:hover {
+      background: #f3f4f6;
+      color: var(--text-primary);
+    }
+
+    .nav-btn.active {
+      background: var(--gold-glow);
+      border-color: var(--border-gold);
+      color: var(--gold-primary);
+      font-weight: 600;
+    }
+
+    .sidebar-footer {
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 16px;
+    }
+
+    .operator-pill {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      padding: 10px 12px;
+      border-radius: var(--radius-sm);
+      margin-bottom: 10px;
+    }
+
+    .operator-pill strong { font-size: 0.86rem; display: block; color: var(--text-primary); }
+    .operator-pill small { font-size: 0.74rem; color: var(--emerald); font-weight: 600; }
+
+    .main-content {
+      padding: 28px 34px 48px;
+      max-width: 1440px;
+      width: 100%;
+    }
+
+    .topbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .topbar h2 {
+      font-size: 2.1rem;
+      line-height: 1.15;
+      color: var(--text-primary);
+    }
+
+    .topbar p {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+
+    .topbar-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    /* KPI Cards */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      margin-bottom: 26px;
+    }
+
+    .kpi-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(31, 41, 55, 0.04);
+    }
+
+    .kpi-card::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold-primary), var(--accent-coral));
+    }
+
+    .kpi-label {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+      font-weight: 600;
+    }
+
+    .kpi-value {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+
+    .kpi-sub {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    /* Panels & Tables */
+    .panel {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 18px rgba(31, 41, 55, 0.04);
+    }
+
+    .panel-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .panel-title {
+      font-size: 1.45rem;
+      color: var(--text-primary);
+    }
+
+    .filter-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .pill-btn {
+      padding: 6px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border-subtle);
+      background: var(--bg-elevated);
+      color: var(--text-secondary);
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.18s;
+    }
+
+    .pill-btn.active, .pill-btn:hover {
+      border-color: var(--border-gold);
+      color: var(--gold-primary);
+      background: var(--gold-glow);
+    }
+
+    /* Visual Room Grid */
+    .rooms-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(255px, 1fr));
+      gap: 16px;
+    }
+
+    .room-card {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 14px;
+      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .room-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--border-gold);
+      box-shadow: 0 10px 24px rgba(113, 75, 103, 0.1);
+    }
+
+    .room-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .room-num {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .badge {
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.74rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+
+    .badge-available { background: var(--emerald-bg); color: var(--emerald); }
+    .badge-reserved { background: var(--amber-bg); color: var(--amber); }
+    .badge-confirmed { background: var(--sky-bg); color: var(--sky); }
+    .badge-unconfirmed { background: var(--amber-bg); color: var(--amber); }
+
+    .room-meta {
+      color: var(--text-secondary);
+      font-size: 0.86rem;
+    }
+
+    .room-price {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--gold-primary);
+    }
+
+    .room-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    /* Data Table */
+    .table-wrap {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+
+    th {
+      text-align: left;
+      padding: 12px 14px;
+      color: var(--text-muted);
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      border-bottom: 1px solid var(--border-subtle);
+      background: var(--bg-elevated);
+    }
+
+    td {
+      padding: 14px;
+      border-bottom: 1px solid var(--border-subtle);
+      color: var(--text-primary);
+      vertical-align: middle;
+    }
+
+    tr:hover td {
+      background: #fafafc;
+    }
+
+    .form-grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .form-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    /* Occupancy Bar Chart */
+    .category-bars {
+      display: grid;
+      gap: 16px;
+    }
+
+    .cat-row-head {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.88rem;
+      margin-bottom: 6px;
+      color: var(--text-primary);
+    }
+
+    .progress-track {
+      height: 10px;
+      border-radius: 999px;
+      background: #e5e7eb;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--gold-primary), var(--accent-coral));
+      border-radius: 999px;
+      transition: width 0.35s ease;
+    }
+
+    /* Modals & Toast */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(17, 24, 39, 0.55);
+      backdrop-filter: blur(5px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      padding: 20px;
+    }
+
+    .modal-backdrop.open { display: flex; }
+
+    .modal-card {
+      width: 100%;
+      max-width: 560px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-gold);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      box-shadow: var(--shadow-luxury);
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .modal-head h3 { font-size: 1.55rem; color: var(--text-primary); }
+
+    .close-x {
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      font-size: 1.4rem;
+      cursor: pointer;
+    }
+
+    .toast-container {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .toast {
+      padding: 13px 18px;
+      border-radius: var(--radius-sm);
+      background: var(--bg-surface);
+      border: 1px solid var(--border-gold);
+      color: var(--text-primary);
+      font-size: 0.88rem;
+      box-shadow: var(--shadow-luxury);
+      animation: slideUp 0.22s ease;
+    }
+
+    .toast.error { border-color: rgba(225, 29, 72, 0.45); color: #be123c; }
+    .toast.success { border-color: rgba(5, 150, 105, 0.45); color: #047857; }
+
+    @keyframes slideUp {
+      from { transform: translateY(12px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .tab-section { display: none; }
+    .tab-section.active { display: block; }
+
+    .file-sync-box {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 12px;
+    }
+
+    .file-card {
+      background: var(--bg-elevated);
+      border: 1px dashed var(--border-gold);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      text-align: center;
+    }
+
+    .file-card strong { display: block; margin-bottom: 6px; color: var(--gold-primary); }
+    .file-card p { font-size: 0.78rem; color: var(--text-secondary); margin-bottom: 10px; }
+
+    @media (max-width: 1024px) {
+      #login-screen { grid-template-columns: 1fr; }
+      .login-hero { display: none; }
+      .app-grid { grid-template-columns: 1fr; }
+      .sidebar { position: static; height: auto; }
+      .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+      .form-grid-2, .form-grid-3, .file-sync-box { grid-template-columns: 1fr; }
+    }
+
+    @media print {
+      body { background: #fff; color: #000; }
+      .sidebar, .topbar, .no-print, .toast-container { display: none !important; }
+      .main-content { padding: 0; }
+      .panel, .modal-card { background: #fff; color: #000; border: 1px solid #ccc; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- LOGIN SCREEN -->
+  <section id="login-screen">
+    <div class="login-hero">
+      <div class="brand-badge">
+        <div class="brand-crest">7</div>
+        <div>
+          <div style="font-weight:700;font-size:0.9rem;">7akimi Hotel</div>
+          <div style="font-size:0.72rem;color:#f3e8f0;">Hospitality PMS</div>
+        </div>
+      </div>
+
+      <div class="hero-copy">
+        <h1 class="font-serif-display">Smart Management.</h1>
+        <p>Rooms, bookings, and guest billing in one place.</p>
+      </div>
+
+      <div class="hero-metrics">
+        <div class="hero-metric">
+          <strong>3 Views</strong>
+          <span>Sea · Lake · Garden</span>
+        </div>
+        <div class="hero-metric">
+          <strong>Live Sync</strong>
+          <span>TXT Data Files</span>
+        </div>
+        <div class="hero-metric">
+          <strong>Instant Folio</strong>
+          <span>EGP Billing</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="login-panel">
+      <div class="login-card">
+        <h2 class="font-serif-display">Reception Sign In</h2>
+        <p class="subtitle">Enter your staff credentials to continue.</p>
+
+        <form id="login-form">
+          <div class="form-group">
+            <label for="login-user">Username</label>
+            <input id="login-user" type="text" class="input-control" required />
+          </div>
+          <div class="form-group">
+            <label for="login-pass">Password</label>
+            <input id="login-pass" type="password" class="input-control" required />
+          </div>
+          <button type="submit" class="btn btn-gold w-full">Sign In</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN APPLICATION SHELL -->
+  <div id="app-shell">
+    <div class="app-grid">
+      <aside class="sidebar">
+        <div>
+          <div class="sidebar-brand">
+            <div class="brand-crest">7</div>
+            <div>
+              <h3 class="font-serif-display">7akimi Hotel</h3>
+              <span>Hotel Operations</span>
+            </div>
+          </div>
+
+          <nav class="nav-list">
+            <button class="nav-btn active" data-tab="dashboard" onclick="switchTab('dashboard', this)">Dashboard &amp; Rooms</button>
+            <button class="nav-btn" data-tab="new-booking" onclick="switchTab('new-booking', this)">New Reservation</button>
+            <button class="nav-btn" data-tab="reservations" onclick="switchTab('reservations', this)">Reservations &amp; Check</button>
+            <button class="nav-btn" data-tab="reports" onclick="switchTab('reports', this)">Reports &amp; Search</button>
+            <button class="nav-btn" data-tab="files" onclick="switchTab('files', this)">TXT File Sync</button>
+          </nav>
+        </div>
+
+        <div class="sidebar-footer">
+          <div class="operator-pill">
+            <div>
+              <strong id="active-operator">staff</strong>
+              <small>● Front Desk Online</small>
+            </div>
+            <button class="btn btn-ghost btn-sm" onclick="window.print()">Print</button>
+          </div>
+          <button class="btn btn-rose btn-sm w-full" onclick="logout()">Sign Out</button>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <div class="topbar">
+          <div>
+            <h2 class="font-serif-display" id="page-title">Executive Overview &amp; Room Rack</h2>
+            <p id="page-subtitle">Real-time room availability, occupancy analytics, and guest operations</p>
+          </div>
+          <div class="topbar-actions no-print">
+            <button class="btn btn-gold" onclick="switchTab('new-booking', document.querySelector('[data-tab=\"new-booking\"]'))">+ Reserve Room</button>
+            <button class="btn btn-ghost" onclick="downloadAllTxt()">Export .TXT Files</button>
+            <button class="btn btn-ghost" onclick="resetToInitialSeed()">Reset Sample Data</button>
+          </div>
+        </div>
+
+        <!-- KPI BAR -->
+        <div class="kpi-grid" id="kpi-grid"></div>
+
+        <!-- TAB 1: DASHBOARD & ROOMS -->
+        <section id="tab-dashboard" class="tab-section active">
+          <div class="panel">
+            <div class="panel-header">
+              <h3 class="panel-title font-serif-display">Interactive Room Rack</h3>
+              <div class="filter-pills">
+                <button class="pill-btn active" onclick="setRoomFilter('ALL', this)">All Rooms</button>
+                <button class="pill-btn" onclick="setRoomFilter('Available', this)">Available</button>
+                <button class="pill-btn" onclick="setRoomFilter('Reserved', this)">Reserved</button>
+                <button class="pill-btn" onclick="setRoomFilter('SeaView', this)">SeaView</button>
+                <button class="pill-btn" onclick="setRoomFilter('LakeView', this)">LakeView</button>
+                <button class="pill-btn" onclick="setRoomFilter('GardenView', this)">GardenView</button>
+              </div>
+            </div>
+            <div class="rooms-grid" id="rooms-grid"></div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-header">
+              <h3 class="panel-title font-serif-display">Revenue &amp; Occupancy by View Category</h3>
+            </div>
+            <div class="category-bars" id="category-bars"></div>
+          </div>
+        </section>
+
+        <!-- TAB 2: NEW RESERVATION -->
+        <section id="tab-new-booking" class="tab-section">
+          <div class="panel">
+            <div class="panel-header">
+              <div>
+                <h3 class="panel-title font-serif-display">Create Guest Reservation</h3>
+                <p style="color:var(--text-secondary);font-size:0.85rem;">Enforces Egyptian National ID (14 digits), Mobile (010/011/012/015), Email, and Date validation.</p>
+              </div>
+            </div>
+
+            <form id="booking-form">
+              <div class="form-grid-2">
+                <div class="form-group">
+                  <label for="bk-name">Customer Full Name</label>
+                  <input id="bk-name" type="text" class="input-control" required />
+                </div>
+                <div class="form-group">
+                  <label for="bk-nid">National ID (14 Digits)</label>
+                  <input id="bk-nid" type="text" maxlength="14" class="input-control" required />
+                </div>
+              </div>
+
+              <div class="form-grid-2">
+                <div class="form-group">
+                  <label for="bk-email">Email Address</label>
+                  <input id="bk-email" type="email" class="input-control" required />
+                </div>
+                <div class="form-group">
+                  <label for="bk-mobile">Mobile Number (11 Digits)</label>
+                  <input id="bk-mobile" type="text" maxlength="11" class="input-control" required />
+                </div>
+              </div>
+
+              <div class="form-grid-3">
+                <div class="form-group">
+                  <label for="bk-date">Check-in Date (DD-MM-YYYY)</label>
+                  <input id="bk-date" type="text" class="input-control" required />
+                </div>
+                <div class="form-group">
+                  <label for="bk-nights">Number of Nights</label>
+                  <input id="bk-nights" type="number" min="1" max="365" class="input-control" value="3" required />
+                </div>
+                <div class="form-group">
+                  <label for="bk-category">Room Category</label>
+                  <select id="bk-category" class="select-control">
+                    <option value="SeaView">SeaView</option>
+                    <option value="LakeView">LakeView</option>
+                    <option value="GardenView">GardenView</option>
+                  </select>
+                </div>
+              </div>
+
+              <div style="margin-top:8px;display:flex;gap:12px;">
+                <button type="submit" class="btn btn-gold">Confirm &amp; Assign Room</button>
+                <button type="reset" class="btn btn-ghost">Clear Form</button>
+              </div>
+            </form>
+          </div>
+        </section>
+
+        <!-- TAB 3: RESERVATIONS, CHECK-IN, CHECK-OUT, EDIT, CANCEL -->
+        <section id="tab-reservations" class="tab-section">
+          <div class="panel">
+            <div class="panel-header">
+              <h3 class="panel-title font-serif-display">Active Reservations Ledger</h3>
+              <input id="res-quick-filter" type="text" class="input-control" style="max-width:260px;" oninput="renderReservationsTable()" />
+            </div>
+
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Res ID</th>
+                    <th>Room</th>
+                    <th>Status</th>
+                    <th>Guest Name</th>
+                    <th>National ID</th>
+                    <th>Check-In</th>
+                    <th>Nights</th>
+                    <th>Est. Bill</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="reservations-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- TAB 4: REPORTS & SEARCH -->
+        <section id="tab-reports" class="tab-section">
+          <div class="panel">
+            <div class="panel-header">
+              <h3 class="panel-title font-serif-display">Check-In Date Report</h3>
+              <div style="display:flex;gap:10px;align-items:center;">
+                <input id="report-date" type="text" class="input-control" style="width:170px;" value="25-12-2024" />
+                <button class="btn btn-gold" onclick="runDateReport()">Generate Report</button>
+              </div>
+            </div>
+            <div id="report-output"></div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-header">
+              <h3 class="panel-title font-serif-display">Multi-Criteria Lookup</h3>
+            </div>
+            <div class="form-grid-3" style="margin-bottom:18px;">
+              <div class="form-group" style="margin-bottom:0;">
+                <label>By Customer Name</label>
+                <div style="display:flex;gap:8px;">
+                  <input id="q-name" type="text" class="input-control" />
+                  <button class="btn btn-ghost" onclick="queryByName()">Find</button>
+                </div>
+              </div>
+              <div class="form-group" style="margin-bottom:0;">
+                <label>By Room Number</label>
+                <div style="display:flex;gap:8px;">
+                  <input id="q-room" type="text" class="input-control" />
+                  <button class="btn btn-ghost" onclick="queryByRoom()">Find</button>
+                </div>
+              </div>
+              <div class="form-group" style="margin-bottom:0;">
+                <label>By Room Status</label>
+                <div style="display:flex;gap:8px;">
+                  <select id="q-status" class="select-control">
+                    <option value="Available">Available</option>
+                    <option value="Reserved">Reserved</option>
+                  </select>
+                  <button class="btn btn-ghost" onclick="queryByStatus()">View</button>
+                </div>
+              </div>
+            </div>
+            <div id="query-output"></div>
+          </div>
+        </section>
+
+        <!-- TAB 5: TXT FILE SYNC -->
+        <section id="tab-files" class="tab-section">
+          <div class="panel">
+            <div class="panel-header">
+              <div>
+                <h3 class="panel-title font-serif-display">C Project TXT Synchronization</h3>
+                <p style="color:var(--text-secondary);font-size:0.85rem;">Import your local <code>Room.txt</code>, <code>reservations.txt</code>, and <code>users.txt</code> files or download updated versions.</p>
+              </div>
+            </div>
+
+            <div class="file-sync-box">
+              <div class="file-card">
+                <strong>Room.txt</strong>
+                <p>Format: <code>Num Status Category Price</code></p>
+                <input type="file" id="upload-rooms" accept=".txt" style="display:none;" onchange="handleFileUpload(event, 'rooms')" />
+                <div style="display:flex;gap:8px;justify-content:center;">
+                  <button class="btn btn-ghost btn-sm" onclick="document.getElementById('upload-rooms').click()">Upload</button>
+                  <button class="btn btn-gold btn-sm" onclick="downloadSingleTxt('rooms')">Download</button>
+                </div>
+              </div>
+
+              <div class="file-card">
+                <strong>reservations.txt</strong>
+                <p>CSV format synced with C parser</p>
+                <input type="file" id="upload-res" accept=".txt" style="display:none;" onchange="handleFileUpload(event, 'res')" />
+                <div style="display:flex;gap:8px;justify-content:center;">
+                  <button class="btn btn-ghost btn-sm" onclick="document.getElementById('upload-res').click()">Upload</button>
+                  <button class="btn btn-gold btn-sm" onclick="downloadSingleTxt('res')">Download</button>
+                </div>
+              </div>
+
+              <div class="file-card">
+                <strong>users.txt</strong>
+                <p>Format: <code>username password</code></p>
+                <input type="file" id="upload-users" accept=".txt" style="display:none;" onchange="handleFileUpload(event, 'users')" />
+                <div style="display:flex;gap:8px;justify-content:center;">
+                  <button class="btn btn-ghost btn-sm" onclick="document.getElementById('upload-users').click()">Upload</button>
+                  <button class="btn btn-gold btn-sm" onclick="downloadSingleTxt('users')">Download</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- EDIT RESERVATION MODAL -->
+  <div class="modal-backdrop" id="edit-modal">
+    <div class="modal-card">
+      <div class="modal-head">
+        <h3 class="font-serif-display">Edit Reservation #<span id="edit-res-id-label"></span></h3>
+        <button class="close-x" onclick="closeEditModal()">&times;</button>
+      </div>
+      <form id="edit-form">
+        <input type="hidden" id="edit-res-id" />
+        <div class="form-group">
+          <label>Customer Name</label>
+          <input id="edit-name" type="text" class="input-control" required />
+        </div>
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label>Mobile Number</label>
+            <input id="edit-mobile" type="text" maxlength="11" class="input-control" required />
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input id="edit-email" type="email" class="input-control" required />
+          </div>
+        </div>
+        <div class="form-grid-3">
+          <div class="form-group">
+            <label>Check-In (DD-MM-YYYY)</label>
+            <input id="edit-date" type="text" class="input-control" required />
+          </div>
+          <div class="form-group">
+            <label>Nights</label>
+            <input id="edit-nights" type="number" min="1" class="input-control" required />
+          </div>
+          <div class="form-group">
+            <label>Room Category</label>
+            <select id="edit-category" class="select-control">
+              <option value="SeaView">SeaView</option>
+              <option value="LakeView">LakeView</option>
+              <option value="GardenView">GardenView</option>
+            </select>
+          </div>
+        </div>
+        <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:10px;">
+          <button type="button" class="btn btn-ghost" onclick="closeEditModal()">Cancel</button>
+          <button type="submit" class="btn btn-gold">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- CHECK-OUT INVOICE MODAL -->
+  <div class="modal-backdrop" id="invoice-modal">
+    <div class="modal-card" id="invoice-printable">
+      <div class="modal-head">
+        <h3 class="font-serif-display">Check-Out Folio &amp; Invoice</h3>
+        <button class="close-x no-print" onclick="closeInvoiceModal()">&times;</button>
+      </div>
+      <div id="invoice-body" style="line-height:1.8;font-size:0.92rem;"></div>
+      <div class="no-print" style="display:flex;justify-content:flex-end;gap:10px;margin-top:20px;">
+        <button class="btn btn-ghost" onclick="window.print()">Print Invoice</button>
+        <button class="btn btn-gold" onclick="closeInvoiceModal()">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toast-container"></div>
+
+  <script>
+    const STORAGE_KEY = 'hakimi_hotel_pms_v1';
+
+    const DEFAULT_USERS = [
+      { username: 'aaa', pass: '123a' },
+      { username: 'bbb', pass: '123b' },
+      { username: 'ccc', pass: '123c' },
+      { username: 'ddd', pass: '123d' },
+      { username: 'eee', pass: '123e' }
+    ];
+
+    const DEFAULT_ROOMS = [
+      { number: 1001, roomstatus: 'Available', roomcategory: 'SeaView', price: 2010 },
+      { number: 1002, roomstatus: 'Available', roomcategory: 'SeaView', price: 2020 },
+      { number: 1003, roomstatus: 'Available', roomcategory: 'SeaView', price: 2030 },
+      { number: 1004, roomstatus: 'Available', roomcategory: 'SeaView', price: 2040 },
+      { number: 1005, roomstatus: 'Reserved', roomcategory: 'SeaView', price: 2050 },
+      { number: 2001, roomstatus: 'Available', roomcategory: 'LakeView', price: 2100 },
+      { number: 2002, roomstatus: 'Available', roomcategory: 'LakeView', price: 2200 },
+      { number: 2003, roomstatus: 'Available', roomcategory: 'LakeView', price: 2300 },
+      { number: 2004, roomstatus: 'Available', roomcategory: 'LakeView', price: 2400 },
+      { number: 2005, roomstatus: 'Reserved', roomcategory: 'LakeView', price: 2500 },
+      { number: 3001, roomstatus: 'Reserved', roomcategory: 'GardenView', price: 1000 },
+      { number: 3002, roomstatus: 'Reserved', roomcategory: 'GardenView', price: 1050 }
+    ];
+
+    const DEFAULT_RESERVATIONS = [
+      { id: 143256, roomnumber: 3001, status: 'confirmed', name: 'Ahmed Mohamed', nationalid: '90022800157646', nights: 4, check_in_date: '25-12-2024', email: 'Ahmed.khaled@gmail.com', mobile: '01227653498', category: 'GardenView' },
+      { id: 154574, roomnumber: 1005, status: 'confirmed', name: 'Mohamed Salah', nationalid: '90022800157647', nights: 3, check_in_date: '26-12-2024', email: 'mohamed.salah@gmail.com', mobile: '01227653499', category: 'SeaView' },
+      { id: 154215, roomnumber: 2005, status: 'unconfirmed', name: 'Sara Ahmed', nationalid: '90022800157648', nights: 2, check_in_date: '29-12-2024', email: 'sara.ahmed@gmail.com', mobile: '01227653500', category: 'LakeView' },
+      { id: 452324, roomnumber: 3002, status: 'unconfirmed', name: 'Hana Ibrahim', nationalid: '90022800157649', nights: 5, check_in_date: '30-12-2024', email: 'hana.ibrahim@gmail.com', mobile: '01227653501', category: 'GardenView' }
+    ];
+
+    let state = loadState();
+    let currentRoomFilter = 'ALL';
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) return JSON.parse(raw);
+      } catch (e) {}
+      return {
+        users: structuredClone(DEFAULT_USERS),
+        rooms: structuredClone(DEFAULT_ROOMS),
+        reservations: structuredClone(DEFAULT_RESERVATIONS),
+        operator: null
+      };
+    }
+
+    function saveState() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+
+    function resetToInitialSeed() {
+      state = {
+        users: structuredClone(DEFAULT_USERS),
+        rooms: structuredClone(DEFAULT_ROOMS),
+        reservations: structuredClone(DEFAULT_RESERVATIONS),
+        operator: state.operator || 'staff'
+      };
+      saveState();
+      renderAll();
+      toast('Sample hotel data restored cleanly.', 'success');
+    }
+
+    function toast(msg, type = 'info') {
+      const box = document.getElementById('toast-container');
+      const el = document.createElement('div');
+      el.className = `toast ${type}`;
+      el.textContent = msg;
+      box.appendChild(el);
+      setTimeout(() => el.remove(), 3400);
+    }
+
+    /* Validation matching C rules */
+    function validateName(v) {
+      const s = v.trim();
+      return s.length > 0 && s.length <= 49 && /[A-Za-z]/.test(s) && /^[A-Za-z ]+$/.test(s);
+    }
+    function validateNationalId(v) { return /^\d{14}$/.test(v.trim()); }
+    function validateMobile(v) { return /^01[0125]\d{8}$/.test(v.trim()); }
+    function validateEmail(v) { return /^[A-Za-z0-9._-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(v.trim()); }
+    function validateDateStr(str) {
+      const m = /^(\d{1,2})-(\d{1,2})-(\d{4})$/.exec(str.trim());
+      if (!m) return null;
+      const day = Number(m[1]), month = Number(m[2]), year = Number(m[3]);
+      if (year < 2000 || year > 2100 || month < 1 || month > 12) return null;
+      const daysInMonth = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+      const leap = (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
+      if (leap) daysInMonth[2] = 29;
+      if (day < 1 || day > daysInMonth[month]) return null;
+      return `${String(day).padStart(2,'0')}-${String(month).padStart(2,'0')}-${year}`;
+    }
+
+    /* Auth */
+    document.getElementById('login-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const u = document.getElementById('login-user').value.trim();
+      const p = document.getElementById('login-pass').value.trim();
+      const ok = state.users.some(x => x.username === u && x.pass === p);
+      if (!ok) {
+        toast('Invalid username or password.', 'error');
+        return;
+      }
+      state.operator = u;
+      saveState();
+      showApp();
+      toast(`Welcome back, ${u}!`, 'success');
+    });
+
+    function logout() {
+      state.operator = null;
+      saveState();
+      document.getElementById('app-shell').style.display = 'none';
+      document.getElementById('login-screen').style.display = 'grid';
+    }
+
+    function showApp() {
+      document.getElementById('login-screen').style.display = 'none';
+      document.getElementById('app-shell').style.display = 'block';
+      document.getElementById('active-operator').textContent = state.operator || 'staff';
+      renderAll();
+    }
+
+    /* Navigation */
+    function switchTab(tabName, btnEl) {
+      document.querySelectorAll('.tab-section').forEach(s => s.classList.remove('active'));
+      document.getElementById(`tab-${tabName}`).classList.add('active');
+
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+      if (btnEl) btnEl.classList.add('active');
+
+      const titles = {
+        dashboard: ['Executive Overview & Room Rack', 'Real-time room availability, occupancy analytics, and guest operations'],
+        'new-booking': ['Create Guest Reservation', 'Assign an available room by view category with input validation'],
+        reservations: ['Reservations Ledger & Check Operations', 'Perform check-in, check-out billing, reservation edits, and cancellations'],
+        reports: ['Arrival Reports & Guest Lookup', 'Filter arrivals by check-in date or query rooms and guests'],
+        files: ['TXT File Synchronization', 'Import or export Room.txt, reservations.txt, and users.txt']
+      };
+      document.getElementById('page-title').textContent = titles[tabName][0];
+      document.getElementById('page-subtitle').textContent = titles[tabName][1];
+    }
+
+    /* Rendering */
+    function renderAll() {
+      renderKPIs();
+      renderRoomsGrid();
+      renderCategoryBars();
+      renderReservationsTable();
+    }
+
+    function renderKPIs() {
+      const totalRooms = state.rooms.length;
+      const availableRooms = state.rooms.filter(r => r.roomstatus === 'Available').length;
+      const reservedRooms = totalRooms - availableRooms;
+      const occupancyPct = totalRooms ? Math.round((reservedRooms / totalRooms) * 100) : 0;
+
+      const projectedRevenue = state.reservations.reduce((sum, res) => {
+        const rm = state.rooms.find(r => r.number === res.roomnumber);
+        return sum + (rm ? rm.price * res.nights : 0);
+      }, 0);
+
+      document.getElementById('kpi-grid').innerHTML = `
+        <div class="kpi-card">
+          <div class="kpi-label"><span>Occupancy Rate</span><span>${reservedRooms}/${totalRooms} Rooms</span></div>
+          <div class="kpi-value">${occupancyPct}%</div>
+          <div class="kpi-sub">${availableRooms} rooms ready for immediate check-in</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label"><span>Active Reservations</span><span>${state.reservations.length} Total</span></div>
+          <div class="kpi-value">${state.reservations.filter(r => r.status === 'confirmed').length} Confirmed</div>
+          <div class="kpi-sub">${state.reservations.filter(r => r.status === 'unconfirmed').length} pending arrival check-in</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label"><span>Projected Stay Revenue</span><span>EGP</span></div>
+          <div class="kpi-value">${projectedRevenue.toLocaleString()}</div>
+          <div class="kpi-sub">Across all active bookings &amp; nights</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label"><span>Available Inventory</span><span>By Category</span></div>
+          <div class="kpi-value">${availableRooms}</div>
+          <div class="kpi-sub">Sea · Lake · Garden views</div>
+        </div>
+      `;
+    }
+
+    function setRoomFilter(filter, btn) {
+      currentRoomFilter = filter;
+      document.querySelectorAll('.filter-pills .pill-btn').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      renderRoomsGrid();
+    }
+
+    function renderRoomsGrid() {
+      const list = state.rooms.filter(r => {
+        if (currentRoomFilter === 'ALL') return true;
+        if (currentRoomFilter === 'Available' || currentRoomFilter === 'Reserved') return r.roomstatus === currentRoomFilter;
+        return r.roomcategory.toLowerCase() === currentRoomFilter.toLowerCase();
+      });
+
+      document.getElementById('rooms-grid').innerHTML = list.map(r => {
+        const isAvail = r.roomstatus === 'Available';
+        const badgeClass = isAvail ? 'badge-available' : 'badge-reserved';
+        const linkedRes = state.reservations.find(res => res.roomnumber === r.number);
+
+        return `
+          <div class="room-card">
+            <div>
+              <div class="room-top">
+                <span class="room-num">#${r.number}</span>
+                <span class="badge ${badgeClass}">${r.roomstatus}</span>
+              </div>
+              <div class="room-meta" style="margin-top:8px;">Category: <strong>${r.roomcategory}</strong></div>
+              <div class="room-price" style="margin-top:6px;">${r.price.toLocaleString()} EGP <span style="font-size:0.76rem;color:var(--text-muted);font-weight:400;">/ night</span></div>
+              ${linkedRes ? `<div style="margin-top:8px;font-size:0.78rem;color:var(--text-secondary);">Guest: <strong>${linkedRes.name}</strong> (${linkedRes.status})</div>` : ''}
+            </div>
+            <div class="room-actions">
+              ${isAvail
+                ? `<button class="btn btn-gold btn-sm w-full" onclick="quickBookCategory('${r.roomcategory}')">Reserve ${r.roomcategory}</button>`
+                : (linkedRes && linkedRes.status === 'unconfirmed'
+                    ? `<button class="btn btn-emerald btn-sm" onclick="performCheckIn(${linkedRes.id})">Check-In</button>
+                       <button class="btn btn-rose btn-sm" onclick="performCancel(${linkedRes.id})">Cancel</button>`
+                    : `<button class="btn btn-amber btn-sm w-full" onclick="performCheckOut(${r.number})">Check-Out &amp; Bill</button>`
+                  )
+              }
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function quickBookCategory(cat) {
+      document.getElementById('bk-category').value = cat;
+      switchTab('new-booking', document.querySelector('[data-tab="new-booking"]'));
+      document.getElementById('bk-name').focus();
+    }
+
+    function renderCategoryBars() {
+      const cats = ['SeaView', 'LakeView', 'GardenView'];
+      document.getElementById('category-bars').innerHTML = cats.map(cat => {
+        const roomsInCat = state.rooms.filter(r => r.roomcategory === cat);
+        const reservedInCat = roomsInCat.filter(r => r.roomstatus !== 'Available').length;
+        const pct = roomsInCat.length ? Math.round((reservedInCat / roomsInCat.length) * 100) : 0;
+        const avgPrice = roomsInCat.length ? Math.round(roomsInCat.reduce((s, x) => s + x.price, 0) / roomsInCat.length) : 0;
+        return `
+          <div>
+            <div class="cat-row-head">
+              <span><strong>${cat}</strong> — Avg. ${avgPrice.toLocaleString()} EGP/night</span>
+              <span>${reservedInCat}/${roomsInCat.length} Occupied (${pct}%)</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-fill" style="width:${pct}%;"></div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderReservationsTable() {
+      const q = (document.getElementById('res-quick-filter')?.value || '').trim().toLowerCase();
+      const rows = state.reservations.filter(res => {
+        if (!q) return true;
+        return String(res.id).includes(q) ||
+               String(res.roomnumber).includes(q) ||
+               res.name.toLowerCase().includes(q) ||
+               res.status.toLowerCase().includes(q);
+      });
+
+      document.getElementById('reservations-tbody').innerHTML = rows.map(res => {
+        const rm = state.rooms.find(r => r.number === res.roomnumber);
+        const estBill = rm ? rm.price * res.nights : 0;
+        const stBadge = res.status === 'confirmed' ? 'badge-confirmed' : 'badge-unconfirmed';
+
+        return `
+          <tr>
+            <td><strong>#${res.id}</strong></td>
+            <td>Room <strong>${res.roomnumber}</strong></td>
+            <td><span class="badge ${stBadge}">${res.status}</span></td>
+            <td>${res.name}</td>
+            <td><code>${res.nationalid}</code></td>
+            <td>${res.check_in_date}</td>
+            <td>${res.nights}</td>
+            <td><strong>${estBill.toLocaleString()} EGP</strong></td>
+            <td>
+              <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                ${res.status === 'unconfirmed'
+                  ? `<button class="btn btn-emerald btn-sm" onclick="performCheckIn(${res.id})">Check-In</button>
+                     <button class="btn btn-rose btn-sm" onclick="performCancel(${res.id})">Cancel</button>`
+                  : `<button class="btn btn-amber btn-sm" onclick="performCheckOut(${res.roomnumber})">Check-Out</button>`
+                }
+                <button class="btn btn-ghost btn-sm" onclick="openEditModal(${res.id})">Edit</button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('') || `<tr><td colspan="9" style="text-align:center;color:var(--text-muted);">No matching reservations found.</td></tr>`;
+    }
+
+    /* Booking */
+    document.getElementById('booking-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('bk-name').value.trim();
+      const nid = document.getElementById('bk-nid').value.trim();
+      const email = document.getElementById('bk-email').value.trim();
+      const mobile = document.getElementById('bk-mobile').value.trim();
+      const dateRaw = document.getElementById('bk-date').value.trim();
+      const nights = Number(document.getElementById('bk-nights').value);
+      const category = document.getElementById('bk-category').value;
+
+      if (!validateName(name)) return toast('Enter a valid customer name.', 'error');
+      if (!validateNationalId(nid)) return toast('National ID must be 14 digits.', 'error');
+      if (!validateEmail(email)) return toast('Enter a valid email address.', 'error');
+      if (!validateMobile(mobile)) return toast('Mobile must be 11 digits (010/011/012/015).', 'error');
+      const validDate = validateDateStr(dateRaw);
+      if (!validDate) return toast('Enter a valid date in DD-MM-YYYY format.', 'error');
+      if (!Number.isInteger(nights) || nights < 1) return toast('Nights must be at least 1.', 'error');
+
+      const availRoom = state.rooms.find(r => r.roomcategory.toLowerCase() === category.toLowerCase() && r.roomstatus === 'Available');
+      if (!availRoom) {
+        return toast(`No available rooms in ${category} category.`, 'error');
+      }
+
+      let newId;
+      do {
+        newId = Math.floor(100000 + Math.random() * 900000);
+      } while (state.reservations.some(r => r.id === newId));
+
+      availRoom.roomstatus = 'Reserved';
+      state.reservations.push({
+        id: newId,
+        roomnumber: availRoom.number,
+        status: 'unconfirmed',
+        name,
+        nationalid: nid,
+        nights,
+        check_in_date: validDate,
+        email,
+        mobile,
+        category: availRoom.roomcategory
+      });
+
+      saveState();
+      renderAll();
+      e.target.reset();
+      toast(`Reservation #${newId} created for Room ${availRoom.number} (${availRoom.roomcategory}).`, 'success');
+      switchTab('reservations', document.querySelector('[data-tab="reservations"]'));
+    });
+
+    /* Check-in & Check-out */
+    function performCheckIn(resId) {
+      const idx = state.reservations.findIndex(r => r.id === resId);
+      if (idx === -1) return toast('Reservation not found.', 'error');
+      if (state.reservations[idx].status === 'confirmed') return toast('Reservation already confirmed.', 'error');
+
+      state.reservations[idx].status = 'confirmed';
+      const rm = state.rooms.find(r => r.number === state.reservations[idx].roomnumber);
+      if (rm) rm.roomstatus = 'Reserved';
+
+      saveState();
+      renderAll();
+      toast(`Reservation #${resId} checked in successfully.`, 'success');
+    }
+
+    function performCheckOut(roomNum) {
+      const rmIdx = state.rooms.findIndex(r => r.number === roomNum);
+      if (rmIdx === -1) return toast(`Room ${roomNum} not found.`, 'error');
+
+      const resIdx = state.reservations.findIndex(r => r.roomnumber === roomNum && r.status === 'confirmed');
+      if (resIdx === -1) return toast(`No confirmed reservation found for Room ${roomNum}.`, 'error');
+
+      const res = state.reservations[resIdx];
+      const rm = state.rooms[rmIdx];
+      const totalBill = res.nights * rm.price;
+
+      rm.roomstatus = 'Available';
+      state.reservations.splice(resIdx, 1);
+      saveState();
+      renderAll();
+
+      document.getElementById('invoice-body').innerHTML = `
+        <div style="border-bottom:1px solid var(--border-subtle);padding-bottom:12px;margin-bottom:14px;">
+          <div style="font-size:1.35rem;font-weight:700;color:var(--gold-primary);">7akimi Hotel</div>
+          <div style="color:var(--text-secondary);font-size:0.82rem;">Official Guest Settlement Receipt · Reservation #${res.id}</div>
+        </div>
+        <div><strong>Guest Name:</strong> ${res.name}</div>
+        <div><strong>National ID:</strong> ${res.nationalid}</div>
+        <div><strong>Room Assigned:</strong> #${rm.number} (${rm.roomcategory})</div>
+        <div><strong>Check-In Date:</strong> ${res.check_in_date}</div>
+        <div><strong>Rate &amp; Duration:</strong> ${res.nights} nights &times; ${rm.price.toLocaleString()} EGP</div>
+        <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border-subtle);font-size:1.25rem;color:var(--gold-primary);">
+          <strong>Total Bill: ${totalBill.toLocaleString()} EGP</strong>
+        </div>
+      `;
+      document.getElementById('invoice-modal').classList.add('open');
+      toast(`Check-out completed for Room ${roomNum}. Total: ${totalBill.toLocaleString()} EGP`, 'success');
+    }
+
+    function closeInvoiceModal() {
+      document.getElementById('invoice-modal').classList.remove('open');
+    }
+
+    function performCancel(resId) {
+      const idx = state.reservations.findIndex(r => r.id === resId);
+      if (idx === -1) return toast('Reservation not found.', 'error');
+      if (state.reservations[idx].status === 'confirmed') {
+        return toast('Cannot cancel a confirmed reservation.', 'error');
+      }
+      const freedRoom = state.reservations[idx].roomnumber;
+      const rm = state.rooms.find(r => r.number === freedRoom);
+      if (rm) rm.roomstatus = 'Available';
+      state.reservations.splice(idx, 1);
+      saveState();
+      renderAll();
+      toast(`Reservation #${resId} canceled. Room ${freedRoom} is now Available.`, 'success');
+    }
+
+    /* Edit Modal */
+    function openEditModal(resId) {
+      const res = state.reservations.find(r => r.id === resId);
+      if (!res) return;
+      document.getElementById('edit-res-id').value = res.id;
+      document.getElementById('edit-res-id-label').textContent = res.id;
+      document.getElementById('edit-name').value = res.name;
+      document.getElementById('edit-mobile').value = res.mobile;
+      document.getElementById('edit-email').value = res.email;
+      document.getElementById('edit-date').value = res.check_in_date;
+      document.getElementById('edit-nights').value = res.nights;
+      document.getElementById('edit-category').value = res.category || 'SeaView';
+      document.getElementById('edit-modal').classList.add('open');
+    }
+
+    function closeEditModal() {
+      document.getElementById('edit-modal').classList.remove('open');
+    }
+
+    document.getElementById('edit-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const resId = Number(document.getElementById('edit-res-id').value);
+      const res = state.reservations.find(r => r.id === resId);
+      if (!res) return;
+
+      const name = document.getElementById('edit-name').value.trim();
+      const mobile = document.getElementById('edit-mobile').value.trim();
+      const email = document.getElementById('edit-email').value.trim();
+      const dateVal = validateDateStr(document.getElementById('edit-date').value.trim());
+      const nights = Number(document.getElementById('edit-nights').value);
+      const newCat = document.getElementById('edit-category').value;
+
+      if (!validateName(name)) return toast('Invalid name.', 'error');
+      if (!validateMobile(mobile)) return toast('Invalid mobile number.', 'error');
+      if (!validateEmail(email)) return toast('Invalid email address.', 'error');
+      if (!dateVal) return toast('Invalid date (DD-MM-YYYY).', 'error');
+      if (!Number.isInteger(nights) || nights < 1) return toast('Invalid nights count.', 'error');
+
+      if (newCat.toLowerCase() !== (res.category || '').toLowerCase()) {
+        const targetRoom = state.rooms.find(r => r.roomcategory.toLowerCase() === newCat.toLowerCase() && r.roomstatus === 'Available');
+        if (!targetRoom) {
+          return toast(`No available rooms in ${newCat}.`, 'error');
+        }
+        const prevRoom = state.rooms.find(r => r.number === res.roomnumber);
+        if (prevRoom) prevRoom.roomstatus = 'Available';
+        targetRoom.roomstatus = 'Reserved';
+        res.roomnumber = targetRoom.number;
+        res.category = targetRoom.roomcategory;
+      }
+
+      res.name = name;
+      res.mobile = mobile;
+      res.email = email;
+      res.check_in_date = dateVal;
+      res.nights = nights;
+
+      saveState();
+      renderAll();
+      closeEditModal();
+      toast(`Reservation #${resId} updated.`, 'success');
+    });
+
+    /* Reports & Search */
+    function runDateReport() {
+      const validDate = validateDateStr(document.getElementById('report-date').value);
+      if (!validDate) return toast('Enter a valid date (DD-MM-YYYY).', 'error');
+
+      const matches = state.reservations.filter(r => validateDateStr(r.check_in_date) === validDate);
+      if (!matches.length) {
+        document.getElementById('report-output').innerHTML = `<p style="color:var(--text-muted);">No reservations recorded for check-in date <strong>${validDate}</strong>.</p>`;
+        return;
+      }
+
+      document.getElementById('report-output').innerHTML = `
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Res ID</th><th>Room</th><th>Status</th><th>Guest Name</th><th>Mobile</th><th>Email</th></tr></thead>
+            <tbody>
+              ${matches.map(r => `
+                <tr>
+                  <td>#${r.id}</td>
+                  <td>${r.roomnumber}</td>
+                  <td><span class="badge ${r.status === 'confirmed' ? 'badge-confirmed' : 'badge-unconfirmed'}">${r.status}</span></td>
+                  <td>${r.name}</td>
+                  <td>${r.mobile}</td>
+                  <td>${r.email}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    }
+
+    function queryByName() {
+      const name = document.getElementById('q-name').value.trim().toLowerCase();
+      const found = state.reservations.filter(r => r.name.toLowerCase().includes(name));
+      document.getElementById('query-output').innerHTML = found.length
+        ? found.map(r => `<div style="padding:10px;border:1px solid var(--border-subtle);border-radius:8px;margin-bottom:8px;"><strong>#${r.id}</strong> — ${r.name} | Room ${r.roomnumber} (${r.status}) | Check-in: ${r.check_in_date} | ${r.nights} nights | ${r.mobile}</div>`).join('')
+        : `<p style="color:var(--text-muted);">No reservation found for "${name}".</p>`;
+    }
+
+    function queryByRoom() {
+      const num = Number(document.getElementById('q-room').value.trim());
+      const rm = state.rooms.find(r => r.number === num);
+      document.getElementById('query-output').innerHTML = rm
+        ? `<div style="padding:12px;border:1px solid var(--border-gold);border-radius:8px;"><strong>Room #${rm.number}</strong> — Status: <strong>${rm.roomstatus}</strong> | Category: ${rm.roomcategory} | Price: ${rm.price.toLocaleString()} EGP/night</div>`
+        : `<p style="color:var(--text-muted);">Room ${num} not found.</p>`;
+    }
+
+    function queryByStatus() {
+      const st = document.getElementById('q-status').value;
+      const list = state.rooms.filter(r => r.roomstatus.toLowerCase() === st.toLowerCase());
+      document.getElementById('query-output').innerHTML = `<div style="display:flex;flex-wrap:wrap;gap:8px;">${list.map(r => `<span class="badge ${st === 'Available' ? 'badge-available' : 'badge-reserved'}">Room ${r.number} · ${r.roomcategory} (${r.price} EGP)</span>`).join('')}</div>`;
+    }
+
+    /* TXT Import / Export */
+    function serializeRoomsTxt() {
+      return state.rooms.map(r => `${r.number} ${r.roomstatus} ${r.roomcategory} ${r.price}`).join('\n') + '\n';
+    }
+    function serializeReservationsTxt() {
+      return state.reservations.map(r =>
+        `${r.id},${r.roomnumber},${r.status},${r.name},${r.nationalid},${r.nights},${r.check_in_date},${r.email},${r.mobile},${r.category || 'SeaView'}`
+      ).join('\n') + '\n';
+    }
+    function serializeUsersTxt() {
+      return state.users.map(u => `${u.username} ${u.pass}`).join('\n') + '\n';
+    }
+
+    function triggerDownload(filename, content) {
+      const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function downloadSingleTxt(kind) {
+      if (kind === 'rooms') triggerDownload('Room.txt', serializeRoomsTxt());
+      if (kind === 'res') triggerDownload('reservations.txt', serializeReservationsTxt());
+      if (kind === 'users') triggerDownload('users.txt', serializeUsersTxt());
+      toast('TXT file exported.', 'success');
+    }
+
+    function downloadAllTxt() {
+      triggerDownload('Room.txt', serializeRoomsTxt());
+      setTimeout(() => triggerDownload('reservations.txt', serializeReservationsTxt()), 150);
+      setTimeout(() => triggerDownload('users.txt', serializeUsersTxt()), 300);
+      toast('Exported Room.txt, reservations.txt, and users.txt.', 'success');
+    }
+
+    function handleFileUpload(event, kind) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const lines = e.target.result.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+        if (kind === 'rooms') {
+          state.rooms = lines.map(line => {
+            const [num, st, cat, pr] = line.split(/\s+/);
+            return { number: Number(num), roomstatus: st, roomcategory: cat, price: Number(pr) };
+          }).filter(r => !Number.isNaN(r.number));
+        } else if (kind === 'res') {
+          state.reservations = lines.map(line => {
+            const p = line.split(',');
+            return {
+              id: Number(p[0]),
+              roomnumber: Number(p[1]),
+              status: p[2],
+              name: p[3],
+              nationalid: p[4],
+              nights: Number(p[5]),
+              check_in_date: p[6],
+              email: p[7],
+              mobile: p[8],
+              category: p[9] || 'SeaView'
+            };
+          }).filter(r => !Number.isNaN(r.id));
+        } else if (kind === 'users') {
+          state.users = lines.map(line => {
+            const [username, pass] = line.split(/\s+/);
+            return { username, pass };
+          }).filter(u => u.username && u.pass);
+        }
+        saveState();
+        renderAll();
+        toast(`Imported ${file.name} successfully.`, 'success');
+      };
+      reader.readAsText(file);
+    }
+
+    // Boot
+    if (state.operator) {
+      showApp();
+    }
+  </script>
+</body>
+</html>
